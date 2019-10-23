@@ -2,6 +2,12 @@ package lesson1;
 
 import kotlin.NotImplementedError;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+
 @SuppressWarnings("unused")
 public class JavaTasks {
     /**
@@ -64,9 +70,7 @@ public class JavaTasks {
      *
      * В случае обнаружения неверного формата файла бросить любое исключение.
      */
-    static public void sortAddresses(String inputName, String outputName) {
-        throw new NotImplementedError();
-    }
+    static public void sortAddresses(String inputName, String outputName) { throw new NotImplementedError(); }
 
     /**
      * Сортировка температур
@@ -99,7 +103,27 @@ public class JavaTasks {
      * 121.3
      */
     static public void sortTemperatures(String inputName, String outputName) {
-        throw new NotImplementedError();
+        int correction = 2730;
+        int[] temp = new int[correction + 5000 + 1];
+        File input = new File(inputName);
+        try (FileReader reader = new FileReader(inputName)) {
+            Scanner scan = new Scanner(reader);
+            while (scan.hasNextLine()) {
+                temp[Math.round(Float.parseFloat(scan.nextLine()) * 10) + correction]++;
+            }
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+        try (FileWriter writer = new FileWriter(outputName)) {
+            for (int i = 0; i <= 5000 + correction; i++) {
+                for (int j = temp[i]; j > 0; j--) {
+                    writer.write(Double.toString((i - correction) /  10.0));
+                    writer.write('\n');
+                }
+            }
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     /**

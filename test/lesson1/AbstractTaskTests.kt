@@ -115,6 +115,21 @@ abstract class AbstractTaskTests : AbstractFileTests() {
                     121.3
                 """.trimIndent()
             )
+            sortTemperatures("input/temp_in2.txt", "temp.txt")
+            assertFileContent(
+                "temp.txt",
+                """
+                    -273.0
+                    -36.6
+                    -14.8
+                    -10.0
+                    0.0
+                    10.0
+                    14.8
+                    36.6
+                    500.0
+                """.trimIndent()
+            )
         } finally {
             File("temp.txt").delete()
         }
