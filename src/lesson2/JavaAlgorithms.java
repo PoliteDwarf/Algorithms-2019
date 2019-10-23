@@ -99,9 +99,26 @@ public class JavaAlgorithms {
      * Если имеется несколько самых длинных общих подстрок одной длины,
      * вернуть ту из них, которая встречается раньше в строке first.
      */
-    static public String longestCommonSubstring(String firs, String second) {
-        throw new NotImplementedError();
+    static public String longestCommonSubstring(String first, String second) {
+        int max = 0;
+        int let = 0;
+        int[][] tabl = new int[first.length()][second.length()];
+        for(int i = 0; i < first.length(); i++) {
+            for(int j = 0; j < second.length(); j++) {
+                if(first.charAt(i) == second.charAt(j)) {
+                    if (i > 0 && j > 0) tabl[i][j] = tabl[i - 1][j - 1] + 1;
+                    else tabl[i][j] = 1;
+                    if (tabl[i][j] > max) {
+                        max = tabl[i][j];
+                        let = i;
+                    }
+                }
+            }
+        }
+        if (max == 0) return "";
+        else return first.substring(let + 1 - max, let + 1);
     }
+    //a,b - длины строк; Трудоёмкость: O(a*b); Ресурсоёмкость: O(a*b)
 
     /**
      * Число простых чисел в интервале
