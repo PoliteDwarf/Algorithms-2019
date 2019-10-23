@@ -2,10 +2,7 @@ package lesson1;
 
 import kotlin.NotImplementedError;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 
 @SuppressWarnings("unused")
@@ -103,30 +100,28 @@ public class JavaTasks {
      * 121.3
      */
     static public void sortTemperatures(String inputName, String outputName) {
-        int correction = 2730;
-        int[] temp = new int[correction + 5000 + 1];
+        int[] temp = new int[7731]; //от -273.0 (2730) и до 500.0 (5000), включая 0.0
         File input = new File(inputName);
-        try (FileReader reader = new FileReader(inputName)) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(inputName))) {
             Scanner scan = new Scanner(reader);
             while (scan.hasNextLine()) {
-                temp[Math.round(Float.parseFloat(scan.nextLine()) * 10) + correction]++;
+                temp[Math.round(Float.parseFloat(scan.nextLine()) * 10) + 2730]++;
             }
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
         try (FileWriter writer = new FileWriter(outputName)) {
-            for (int i = 0; i <= 5000 + correction; i++) {
+            for (int i = 0; i <= 7730; i++) {
                 for (int j = temp[i]; j > 0; j--) {
-                    float rez = (float)((i - correction) /  10.0);
+                    float rez = (float)((i - 2730) /  10.0);
                     writer.write(String.valueOf(rez));
                     writer.write('\n');
                 }
             }
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
     }
-
     // Трудоёмкость: O(n); Ресурсоёмкость: O(t);
 
     /**
