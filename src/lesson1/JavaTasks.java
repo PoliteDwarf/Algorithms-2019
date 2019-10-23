@@ -100,19 +100,19 @@ public class JavaTasks {
      * 121.3
      */
     static public void sortTemperatures(String inputName, String outputName) {
+        String line;
         int[] temp = new int[7731]; //от -273.0 (2730) и до 500.0 (5000), включая 0.0
         File input = new File(inputName);
         try (BufferedReader reader = new BufferedReader(new FileReader(inputName))) {
-            Scanner scan = new Scanner(reader);
-            while (scan.hasNextLine()) {
-                temp[Math.round(Float.parseFloat(scan.nextLine()) * 10) + 2730]++;
+            while ((line = reader.readLine()) != null) {
+                temp[Math.round(Float.parseFloat(line) * 10) + 2730]++;
             }
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
         try (FileWriter writer = new FileWriter(outputName)) {
             for (int i = 0; i <= 7730; i++) {
-                for (int j = temp[i]; j > 0; j--) {
+                for (int j = 0; j < temp[i]; j++) {
                     float rez = (float)((i - 2730) /  10.0);
                     writer.write(String.valueOf(rez));
                     writer.write('\n');
