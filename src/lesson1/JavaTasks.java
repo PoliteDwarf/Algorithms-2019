@@ -117,7 +117,8 @@ public class JavaTasks {
         try (FileWriter writer = new FileWriter(outputName)) {
             for (int i = 0; i <= 5000 + correction; i++) {
                 for (int j = temp[i]; j > 0; j--) {
-                    writer.write(Double.toString((i - correction) /  10.0));
+                    float rez = (float)((i - correction) /  10.0);
+                    writer.write(String.valueOf(rez));
                     writer.write('\n');
                 }
             }
@@ -125,6 +126,8 @@ public class JavaTasks {
             System.out.println(ex.getMessage());
         }
     }
+
+    // Трудоёмкость: O(n); Ресурсоёмкость: O(t);
 
     /**
      * Сортировка последовательности
