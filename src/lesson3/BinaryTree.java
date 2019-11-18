@@ -102,8 +102,6 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> implemen
         }
         return root;
     }
-    //Трудоёмкость: O(length); Ресурсоёмкость: O(length); length - длина пути от root до конца дерева,
-    // при условии прохода через удаляемую вершину
 
     private T last(Node<T> root) {
         if (root == null) throw new NoSuchElementException();
@@ -113,6 +111,9 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> implemen
         }
         return current.value;
     }
+
+    //Трудоёмкость: O(length); Ресурсоёмкость: O(length); length - длина пути от root до конца дерева,
+    // при условии прохода через удаляемую вершину
 
     @Override
     public boolean contains(Object o) {
