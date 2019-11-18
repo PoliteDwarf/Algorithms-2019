@@ -74,8 +74,44 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> implemen
      */
     @Override
     public boolean remove(Object o) {
-        // TODO
-        throw new NotImplementedError();
+        if (!contains(o)) return false;
+        Node<T> goal = new Node<>((T) o);
+        root = removed(root, goal);
+        size--;
+        return true;
+    }
+
+    private Node<T> removed(Node<T> root, Node<T> goal) {
+        if (root.value.compareTo(goal.value) > 0)
+            root.left = removed(root.left, goal);
+        else if (root.value.compareTo(goal.value) < 0)
+            root.right = removed(root.right, goal);
+        else {
+            if (root.left == null || root.right == null) {
+                if (root.left == null)
+                    root = root.right;
+                else root = root.left;
+            }
+            else {
+                Node<T> Replace = new Node<>(last(root.left));
+                Replace.left = root.left;
+                Replace.right = root.right;
+                root = Replace;
+                root.left = removed(root.left, Replace);
+            }
+        }
+        return root;
+    }
+    //Трудоёмкость: O(length); Ресурсоёмкость: O(length); length - длина пути от root до конца дерева,
+    // при условии прохода через удаляемую вершину
+
+    private T last(Node<T> root) {
+        if (root == null) throw new NoSuchElementException();
+        Node<T> current = root;
+        while (current.right != null) {
+            current = current.right;
+        }
+        return current.value;
     }
 
     @Override
