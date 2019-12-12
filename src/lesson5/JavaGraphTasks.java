@@ -2,10 +2,7 @@ package lesson5;
 
 import kotlin.NotImplementedError;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
-import java.util.Set;
+import java.util.*;
 
 @SuppressWarnings("unused")
 public class JavaGraphTasks {
@@ -122,11 +119,11 @@ public class JavaGraphTasks {
      * Ответ: A, E, J, K, D, C, H, G, B, F, I
      */
     public static Path longestSimplePath(Graph graph) {
-        LinkedList<Path> paths = new LinkedList<>(); // единственный массив данных длинной a = paths.size()
+        LinkedList<Path> paths = new LinkedList<>(); // Единственный массив данных длинной a = paths.size()
         Path rez = new Path();
         int length = 0;
         for (Graph.Vertex vertex : graph.getVertices()) paths.add(new Path(vertex));
-        while (!paths.isEmpty()) { // цикл длительностью a итераций
+        while (!paths.isEmpty()) { // Цикл длительностью a итераций
             Path path = paths.getFirst();
             paths.remove();
             if (path.getLength() > length) {
@@ -135,7 +132,7 @@ public class JavaGraphTasks {
             }
             for (Graph.Vertex next : graph.getNeighbors(path.getVertices().get(path.getLength()))) {
                 if (!path.contains(next)) paths.add(new Path(path, graph, next));
-            } // ещё один цикл длительностью b - число соседей у последней вершины текущего path
+            } // Ещё один цикл длительностью b итераций. b = число соседей у последней вершины текущего path
         }
         return rez;
     }
