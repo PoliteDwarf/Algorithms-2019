@@ -2,7 +2,9 @@ package lesson5;
 
 import kotlin.NotImplementedError;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Set;
 
 @SuppressWarnings("unused")
@@ -120,6 +122,22 @@ public class JavaGraphTasks {
      * Ответ: A, E, J, K, D, C, H, G, B, F, I
      */
     public static Path longestSimplePath(Graph graph) {
-        throw new NotImplementedError();
+        LinkedList<Path> paths = new LinkedList<>(); // единственный массив данных длинной a = paths.size()
+        Path rez = new Path();
+        int length = 0;
+        for (Graph.Vertex vertex : graph.getVertices()) paths.add(new Path(vertex));
+        while (!paths.isEmpty()) { // цикл длительностью a итераций
+            Path path = paths.getFirst();
+            paths.remove();
+            if (path.getLength() > length) {
+                length = path.getLength();
+                rez = path;
+            }
+            for (Graph.Vertex next : graph.getNeighbors(path.getVertices().get(path.getLength()))) {
+                if (!path.contains(next)) paths.add(new Path(path, graph, next));
+            } // ещё один цикл длительностью b - число соседей у последней вершины текущего path
+        }
+        return rez;
     }
+    //Ресурсоёмкость: O(a) Трудоёмкость: O(a * b)
 }
